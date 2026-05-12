@@ -1,11 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konixon Studio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Konixon — Website Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    :root{
+      --bg:#ffffff;
+      --surface:#f5f5f7;
+      --text:#111111;
+      --muted:#666666;
+      --border:#e5e5e5;
+      --primary:#6c63ff;
+      --primary-dark:#5448ff;
+    }
+
+    body.dark{
+      --bg:#0f1115;
+      --surface:#171a21;
+      --text:#ffffff;
+      --muted:#9ca3af;
+      --border:#262a33;
+      --primary:#8b7dff;
+      --primary-dark:#6f5dff;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Montserrat',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      transition:0.25s ease;
+      overflow-x:hidden;
+    }
+
+    .container{
+      width:min(1200px,92%);
+      margin:auto;
+    }
+
+    /* HEADER */
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:var(--bg);
+      border-bottom:1px solid var(--border);
+    }
+
+    nav{
+      height:78px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .logo{
+      font-size:1.7rem;
+      font-weight:800;
+      letter-spacing:-1px;
+    }
+
+    .logo span{
+      color:var(--primary);
+    }
+
+    .menu{
+      display:flex;
+      align-items:center;
+      gap:34px;
+    }
+
+    .menu a{
+      text-decoration:none;
+      color:var(--muted);
+      font-weight:600;
+      transition:0.2s;
+      font-size:0.95rem;
+    }
+
+    .menu a:hover{
+      color:var(--text);
+    }
+
+    .actions{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .theme-btn{
+      width:46px;
+      height:46px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--surface);
+      color:var(--text);
+      cursor:pointer;
+      font-size:1rem;
+      transition:0.2s;
+    }
+
+    .theme-btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .login-btn{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:600;
+      padding:13px 18px;
+      border-radius:12px;
+      transition:0.2s;
+    }
+
+    .register-btn{
+      text-decoration:none;
+      background:var(--primary);
+      color:white;
+      padding:13px 20px;
+      border-radius:12px;
+      font-weight:700;
+      transition:0.2s;
+    }
+
+    .register-btn:hover{
+      background:var(--primary-dark);
+    }
+
+    /* HERO */
+
+    .hero{
+      min-height:92vh;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:70px;
+      padding:80px 0;
+    }
+
+    .hero-left{
+      flex:1;
+    }
+
+    .badge{
+      display:inline-block;
+      background:var(--surface);
+      color:var(--primary);
+      border:1px solid var(--border);
+      padding:12px 18px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:0.9rem;
+      margin-bottom:28px;
+    }
+
+    h1{
+      font-size:clamp(3.4rem,8vw,6.3rem);
+      line-height:0.95;
+      letter-spacing:-3px;
+      margin-bottom:28px;
+      font-weight:800;
+    }
+
+    h1 span{
+      color:var(--primary);
+    }
+
+    .hero-text{
+      color:var(--muted);
+      font-size:1.1rem;
+      line-height:1.9;
+      max-width:620px;
+      margin-bottom:42px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      text-decoration:none;
+      padding:18px 28px;
+      border-radius:16px;
+      font-weight:700;
+      transition:0.2s;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .btn-primary{
+      background:var(--primary);
+      color:white;
+    }
+
+    .btn-primary:hover{
+      background:var(--primary-dark);
+      transform:translateY(-2px);
+    }
+
+    .btn-secondary{
+      background:var(--surface);
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+
+    .btn-secondary:hover{
+      transform:translateY(-2px);
+    }
+
+    /* HERO RIGHT */
+
+    .hero-right{
+      flex:1;
+      display:flex;
+      justify-content:center;
+    }
+
+    .dashboard{
+      width:100%;
+      max-width:560px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:28px;
+      overflow:hidden;
+    }
+
+    .dashboard-top{
+      height:70px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 24px;
+    }
+
+    .dashboard-title{
+      font-weight:700;
+    }
+
+    .dashboard-menu{
+      display:flex;
+      gap:12px;
+    }
+
+    .dashboard-menu div{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:#d1d5db;
+    }
+
+    .dashboard-content{
+      padding:26px;
+    }
+
+    .card{
+      background:var(--bg);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:24px;
+      margin-bottom:18px;
+    }
+
+    .card h3{
+      font-size:1.2rem;
+      margin-bottom:10px;
+    }
+
+    .card p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    /* STATS */
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:24px;
+      padding-bottom:100px;
+    }
+
+    .stat{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:38px;
+      text-align:center;
+    }
+
+    .stat h2{
+      font-size:2.5rem;
+      margin-bottom:10px;
+    }
+
+    .stat p{
+      color:var(--muted);
+      font-weight:500;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:36px 0;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    /* MOBILE */
+
+    @media(max-width:950px){
+
+      .hero{
+        flex-direction:column;
+        text-align:center;
+      }
+
+      .hero-text{
+        margin-inline:auto;
+      }
+
+      .hero-buttons{
+        justify-content:center;
+      }
+
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .menu{
+        display:none;
+      }
+
+      nav{
+        gap:20px;
+      }
+
+      h1{
+        letter-spacing:-2px;
+      }
+    }
+
+  </style>
 </head>
-<body>
-    <h1></h1>
+<body class="dark">
+
+  <header>
+    <div class="container">
+
+      <nav>
+
+        <div class="logo">
+          Koni<span>x</span>on
+        </div>
+
+        <div class="menu">
+          <a href="#">Home</a>
+          <a href="#">Templates</a>
+          <a href="#">Pricing</a>
+          <a href="#">Features</a>
+          <a href="#">About</a>
+        </div>
+
+        <div class="actions">
+
+          <button class="theme-btn" id="themeBtn">
+            ◐
+          </button>
+
+          <a href="#" class="login-btn">
+            Log in
+          </a>
+
+          <a href="#" class="register-btn">
+            Register
+          </a>
+
+        </div>
+
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container">
+
+      <section class="hero">
+
+        <div class="hero-left">
+
+          <div class="badge">
+            Website Studio Platform
+          </div>
+
+          <h1>
+            Create powerful <span>websites</span> with Konixon
+          </h1>
+
+          <p class="hero-text">
+            Konixon helps creators, developers and businesses build modern
+            websites with clean design, responsive layouts and fast performance.
+            Everything you need to launch your next project in one platform.
+          </p>
+
+          <div class="hero-buttons">
+
+            <a href="#" class="btn btn-primary">
+              Start Building
+            </a>
+
+            <a href="#" class="btn btn-secondary">
+              Explore Templates
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="hero-right">
+
+          <div class="dashboard">
+
+            <div class="dashboard-top">
+
+              <div class="dashboard-title">
+                Konixon Studio
+              </div>
+
+              <div class="dashboard-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+
+            </div>
+
+            <div class="dashboard-content">
+
+              <div class="card">
+                <h3>Modern Website Builder</h3>
+                <p>
+                  Build beautiful landing pages and professional websites
+                  with responsive sections and flexible layouts.
+                </p>
+              </div>
+
+              <div class="card">
+                <h3>Fast & Responsive</h3>
+                <p>
+                  Optimized for desktop, tablet and mobile devices with
+                  smooth user experience and modern UI.
+                </p>
+              </div>
+
+              <div class="card">
+                <h3>Creative Design System</h3>
+                <p>
+                  Use stylish blocks, typography and components to create
+                  unique websites for your brand.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section class="stats">
+
+        <div class="stat">
+          <h2>500+</h2>
+          <p>Projects launched</p>
+        </div>
+
+        <div class="stat">
+          <h2>99%</h2>
+          <p>Responsive experience</p>
+        </div>
+
+        <div class="stat">
+          <h2>24/7</h2>
+          <p>Platform support</p>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 Konixon Studio. All rights reserved.
+  </footer>
+
+  <script>
+
+    const themeBtn = document.getElementById("themeBtn");
+
+    themeBtn.addEventListener("click", () => {
+
+      document.body.classList.toggle("dark");
+
+    });
+
+  </script>
+
 </body>
 </html>
